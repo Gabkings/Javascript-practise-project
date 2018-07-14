@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Vedeo player</title>
+	<style type="text/css">
+		#vedeo_player_box{
+			width: 550;margin: 0 auto;background: 000;
+		}
+		#play_buttons{
+			background: #333;padding: 10px;
+		}
+	</style> 
+	<script type="text/javascript">
+		var vid , playbtn ,seekSlider,currenttimetext,durationtimetext,mutebtn,volSlider,fullScreen;
+		function initializePlayer(){
+			vid = document.getElementById("my_video");
+			playbtn = document.getElementById("playpausebtn");
+			seekSlider = document.getElementById("seekSlider");
+			currenttimetext = document.getElementById("currenttimetext");
+			durationtimetext = document.getElementById("durationtimetext");
+			mutebtn = document.getElementById("mutebtn");
+			volSlider = document.getElementById("volSlider");
+			fullScreen = document.getElementById("fullScreen");
+			playbtn.addEventListener("click",playPause,false);
+			seekSlider.addEventListener("change",vidSeek,false);
+			vid.addEventListener("timeupdate",seektimeupdate,false);
+			mutebtn.addEventListener("click",vidmute,false);
+			volSlider.addEventListener("change",volSeek,false);
+			fullScreen.addEventListener("click",fullscr,false)
+		}
+		function fullscr(){
+			if(vid.requestFullScreen){
+				vid.requestFullScreen();
+			}else if(vid.webkitRequestFullScreen){
+				vid.webkitRequestFullScreen();
+			}else if(vid.mozRequestFullScreen){
+				vid.mozRequestFullScreen();
+			}
+		}
+		function volSeek(){
+			vid.volume = volSlider.value / 100;
+		}
+		function vidmute(){
+			if(vid.muted){
+					 vid.muted = false;
+                     mutebtn.innerHTML = "Muted";
+                     //vid.volume = 0/100;
+			}else{
+				 vid.muted = true;
+                 mutebtn.innerHTML = "Unmute";
+                 //vid.volume = volSlider.value / 100;
+			}
+		}
+		function seektimeupdate(){
+			var nt = vid.currentTime * (100 /vid.duration);
+			seekSlider.value = nt;
+			var curmins = Math.floor(vid.currentTime / 60);
+			var cursecs = Math.floor(vid.currentTime - curmins * 60);
+			var durmins = Math.floor(vid.duration / 60);
+			var dursecs = Math.round(vid.duration - durmins * 60);
+			if(cursecs < 10){
+				cursecs = "0" + cursecs;
+			}
+			if(dursecs < 10){
+				dursecs = "0" + dursecs;
+			}
+			currenttimetext.innerHTML = curmins + ":" + cursecs;
+			durationtimetext.innerHTML = durmins+":"+dursecs;
+		}
+		function vidSeek(){
+			var seekto = vid.duration * (seekSlider.value / 100);
+			vid.currentTime = seekto;
+		}
+		window.onload = initializePlayer;
+		function playPause(){
+		
+			if(vid.paused){
+				vid.play();
+				playbtn.innerHTML = "Pause";
+			}else{
+				 vid.pause();
+                 playbtn.innerHTML = "Play";
+			}
+		}
+	</script>
+</head>
+<body>
+<div id="vedeo_player_box">
+	<video id="my_video" width="550" height="350" autoplay>
+		<source src="AJAX Tutorial - 1 - Introduction to AJAX - YouTube.webm">
+	</video>
+	<div id="play_buttons">
+		<button id="playpausebtn" >Pause</button>
+		<input type="range" id="seekSlider" min="0" max="100" step="1" value="0" width="150px">
+		<span id="currenttimetext"></span> / <span id="durationtimetext"></span>
+		<button id="mutebtn">Mute</button>
+		<input type="range" id="volSlider" min="0" max="100" step="1" value="50" width="80px">
+		<button id="fullScreen">[&nbsp;]</button>
+	</div>
+</div>
+</body>
+</html>

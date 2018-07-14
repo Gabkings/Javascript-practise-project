@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Quiz App</title>
+	<link rel="stylesheet" type="text/css" href="main.css">
+</head>
+<body>
+<h2>The best online quiz app</h2>
+<form id="quiz" name="quiz">
+	<p>What is the capital of Rhode island ?</p>
+	<input type="text" name="question1" id="textbox">
+	<p>What is capital of connecticut ?</p>
+	<input type="radio" name="question2" id="mc" value="Hartford"> Hartford <br>
+	<input type="radio" name="question2" id="mc" value="Heartford"> Heartford <br>
+	<p>What is capital of new york ?</p>
+	<input type="radio" name="question3" value="Albany"> Albany <br>
+	<input type="radio" name="question3" value="All
+	Benny"> All Benny <br>
+
+	<input type="button" value="I am Done" id="button" onclick="check();">
+</form>
+<div id="after_submit">
+	<p id="message"></p>
+	<p id="number_correct">You finished good job</p>
+	<img id="picture">
+</div>
+
+<script src="main.js"></script>
+</body>
+</html>
